@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimun-scale=1.0,maximun-scale=1.0, user-scalable=no" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css" />
+    <!-- noto Sans 웹 폰트 적용 -->
+    <link rel="stylesheet" type="text/css" href="assets/notosans.css" />
+    <style type="text/css">
+      .category {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 40px;
+      }
+      button {
+        width: 10%;
+      }
+      #today {
+        text-align: center;
+        margin: 40px;
+      }
+    </style>
+    <title>즐거운 점심메뉴 고르기</title>
+  </head>
+
+  <body>
+    <div id="today"></div>
+    <div class="category">
+      <button class="btn btn-primary" value="korean">한식</button>
+      <button class="btn btn-primary" value="soup">탕, 찌개</button>
+      <button class="btn btn-primary" value="chinese">중식</button>
+      <button class="btn btn-primary" value="japanese">일식</button>
+      <button class="btn btn-primary" value="western">양식</button>
+      <button class="btn btn-primary" value="drunk">해장</button>
+      <button class="btn btn-primary" value="conv">간편식</button>
+      <button class="btn btn-primary" value="etc">기타</button>
+    </div>
+    <hr />
+    <div class="result"></div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script type="text/javascript">
+    function getToday() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = ("0" + (1 + date.getMonth())).slice(-2);
+      var day = ("0" + date.getDate()).slice(-2);
+
+      return year + "-" + month + "-" + day;
+    }
+
+    function random(n1, n2) {
+      return parseInt(Math.random() * (n2 - n1 + 1)) + n1;
+    }
+
+    var menu_list = {
+      korean: ["불고기", "오징어두루치기", "닭볶음", "쌈밥", "비빔밥", "생선구이", "낙지볶음", "게장", "떡갈비"],
+      soup: ["김치찌개", "순두부찌개", "된장찌개", "부대찌개", "동태찌개", "청국장", "갈비탕", "추어탕", "삼계탕"],
+      chinese: ["짜장면", "짬뽕", "볶음밥", "탕수육", "마파두부", "양장피", "깐풍기", "유린기", "고추잡채"],
+      japanese: ["초밥", "라멘", "낫또", "오니기리", "덮밥", "우동", "야키니쿠", "메밀소바", "돈카츠"],
+      drunk: ["북엇국", "콩나물국밥", "순대국", "뼈해장국", "우거지국", "선지해장국", "올갱이국", "매운라면", "물냉면"],
+      conv: ["편의점도시락", "샌드위치", "토스트", "샐러드", "김밥", "떡볶이", "핫도그", "밥버거", "시리얼"],
+      western: ["토마토스파게티", "봉골레", "크림파스타", "피자", "함박스테이크", "리조또", "스테이크", "햄버거", "시저샐러드"],
+      etc: ["쌀국수", "팟타이", "카레", "찜닭", "수제비", "칼국수", "아구찜", "닭갈비", "월남쌈"],
+    };
+
+    $(function () {
+      var today = getToday();
+      var h1 = $("<h1>").html(today + "의 점심메뉴 고르기 😘");
+      $("#today").append(h1);
+
+      // 랜덤 메뉴 결과
+      $("button").click(function (e) {
+        e.preventDefault();
+        var num = random(0, 8);
+        var category = $(this).attr("value");
+        // console.log(category);
+        // menu_list JSON에서 Key값을 button의 value값과 매핑되지 않습니다 ㅠㅠ
+        var menu = menu_list.category[num];
+        console.log(menu);
+        $(".result").html(menu);
+      });
+    });
+  </script>
+</html>
